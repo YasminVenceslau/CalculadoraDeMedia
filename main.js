@@ -26,23 +26,36 @@ function adicionarLinha(){
     const inputNomeAtividade = document.getElementById('nome');
     const inputNotaAtividade = document.getElementById('nota');
     
-    atividade.push(inputNomeAtividade.value);
-    notas.push(Number(inputNotaAtividade.value));
+    
+    //inpede que se tenha atividades com o mesmo nome
+        if (atividade.includes(inputNomeAtividade.value)){
+            alert(`A Atividade: ${inputNomeAtividade.value}, já foi inserida`)   
+        }else{ //criação de linhas na tabela
 
-    //criação de linhas na tabela
-    let linha = '<tr>'; 
-    linha +=  `<td>${inputNomeAtividade.value}</td>`;
-    linha += `<td>${inputNotaAtividade.value}</td>`;
-    linha += `<td>${inputNotaAtividade.value >= 7 ? imgAprovado : imgReprovado}</td>`;// se  a nota da atividade for mair que  7 vai ser aprovado, se não vaoi ser reprovado
-    linha += '</tr>';
+        atividade.push(inputNomeAtividade.value);
+        notas.push(Number(inputNotaAtividade.value));
+        
 
-    linhas += linha;
+        let linha = '<tr>'; 
+        linha +=  `<td>${inputNomeAtividade.value}</td>`;
+        linha += `<td>${inputNotaAtividade.value}</td>`;
+        
+                
+        // se  a nota da atividade for mair que  7 vai ser aprovado, se não vaoi ser reprovado
+        linha += `<td>${inputNotaAtividade.value >= 7 ? imgAprovado : imgReprovado}</td>`;
+        linha += '</tr>';
+        
+        linhas += linha;}
+        
+    
 
     // limpa os campos no formulário
     inputNomeAtividade.value = '';
     inputNotaAtividade.value = '';
-
 }
+
+
+
 
 function atualizaTabela(){
     // atuliza a tabela adicionando novas linhas
@@ -53,7 +66,7 @@ function atualizaTabela(){
 function atulizeMedia(){
     const mediaFinal = calculoMedia();
 
-    document.getElementById('media-valor').innerHTML = mediaFinal;
+    document.getElementById('media-valor').innerHTML = mediaFinal.toFixed(1);
     document.getElementById('media-resultado').innerHTML = mediaFinal >= 7 ? spanAprovado : spanReprovado ;
 
     
@@ -61,12 +74,14 @@ function atulizeMedia(){
 
 function calculoMedia(){
     let somaDasNotas = 0;
-
+    
     for (let i = 0; i < notas.length; i++){
         somaDasNotas += notas[i];
     }
 
-    return somaDasNotas / notas.length;
+    let m = somaDasNotas / notas.length;
+
+    return m
 
 }
 
